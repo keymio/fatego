@@ -1,0 +1,271 @@
+requestScreenCapture();
+if (!requestScreenCapture()){
+    toast("请求截图失败")
+    stop();
+    }
+var apple = images.read("/storage/emulated/0/fgo/apple.jpg")
+var support = images.read("/storage/emulated/0/fgo/christmas.jpg")
+var battle = images.read("/storage/emulated/0/fgo/battle.jpg")
+var result = images.read("/storage/emulated/0/fgo/result.jpg")
+var change = images.read("/storage/emulated/0/fgo/change.jpg")
+var turn3 = images.read("/storage/emulated/0/fgo/turn3.jpg")
+var attack = images.read("/storage/emulated/0/fgo/attack.jpg")
+
+var n = dialogs.rawInput("设置任务次数", "2");
+for (i = 1; i <= n; i++) {
+    toast("任务第" + i + "次");
+    sleep(1000)
+
+    click(1600, 340)
+    sleep(2000)
+    /*
+        var point_apple = findImage(captureScreen(), apple);
+        var a = 0
+        if (point_apple) {
+            click (point_apple.x + 100,point_apple.y - 100);
+            sleep (2000)
+            click (1260,840);
+            a = a + 1
+            toast ("吃圣晶石 " + a + " 次！")
+            sleep (4000)//跑芙芙
+        }
+    */
+    while (true) {
+        for (y1 = 325, y2 = 425; y2 < 1080; y1 = y1 + 100, y2 = y2 + 100) {
+            toast("寻找助战");
+            var point_support = findImage(captureScreen(), support);
+            if (point_support) {
+                toast("选择助战");
+                click(point_support.x + 100, point_support.y + 10);
+                var start = true
+                break
+            }
+            else if (i == 1125) {
+                click(1255, 195)
+                sleep(1000)
+                click(1260, 845)
+                toast("刷新助战");
+                sleep(2000)//跑芙芙
+            }
+            else {
+                swipe(1859, y1, 1859, y2, 2000)//滑动
+                sleep(2000)
+            }
+        }
+        if (start) {
+            break
+        }
+    }
+
+    sleep(2000)
+    var img_team = captureScreen();
+    var point_team = findColor(img_team, "#c09f05", {
+        region: [940, 75, 1, 1],//找色区域加载黑底
+    });
+
+    if (!point_team) {
+        click(940, 75);
+        toast("选择队伍5");
+        sleep(2000)
+    }
+
+    sleep(2000)
+    toast("开始任务！");
+    click(1788, 1010)//开始任务
+    sleep(2000)
+
+    while (true) {
+        var img_battle = captureScreen();
+        var color_battle = images.pixel(img_battle, 98, 940);
+        var point_battle = findColor(img_battle, "#4f4f4f", {//在该图片中找色
+            region: [98, 940, 1, 1],
+            threshold: 99
+        });
+        if (!point_battle) {
+            toast("进入副本，第一面。开始战斗！" + colors.toString(color_battle));
+            sleep(3000)
+            //1号位从者
+            click(100, 865)//1技能
+            sleep(2500)
+
+            //2号位从者
+            click(585, 865)//1技能
+            sleep(2500)
+            click(720, 865)//2技能
+            sleep(2500)
+
+            sleep(1000)
+            click(1700, 900)//选卡
+            sleep(2000)
+            click(1000, 300)//宝具2
+            sleep(800)
+            click(200, 750)//卡1
+            sleep(800)
+            click(600, 750)//卡2
+            break
+        }
+    }
+
+
+    while (true) {
+        var p2 = findImage(captureScreen(), battle, {
+            region: [1742, 256],
+        });
+        if (p2) {
+            toast("第二面" + p2);
+            sleep(2000)
+            click(66, 66)//更改目标
+            sleep(200)
+
+            //3号位从者
+            click(1345, 865)//3技能
+            sleep(2500)
+
+            click(1800, 460)//换人礼装
+            sleep(500)
+            click(1625, 460)//3技能换人
+            sleep(500)
+            click(515, 525)//2号位从者
+            sleep(500)
+            click(1415, 525)//5号位从者
+            sleep(500)
+            click(950, 935)
+            sleep(2500)
+            break
+        }
+    }
+
+    //换人
+    while (true) {
+        var c = findImage(captureScreen(), change, {
+            region: [635, 940, 100, 100],
+        });
+        if (c) {
+            toast(">>5号<<入场");
+            sleep(2000)
+
+            click(1800, 460)//换人礼装
+            sleep(500)
+            click(1360, 460)//1技能加攻
+            sleep(2500)
+
+            //2号位从者
+            click(720, 865)//2技能
+            sleep(2500)
+            click(865, 865)//3技能
+            sleep(2500)
+
+            sleep(1000)
+            click(1700, 900)//选卡
+            sleep(2000)
+            click(1000, 750)//卡3
+            sleep(800)
+            click(1400, 750)//卡4
+            sleep(800)
+            click(1300, 300)//宝具3
+            break
+        }
+    }
+
+    while (true) {
+        var p3 = findImage(captureScreen(), battle, {
+            region: [1742, 256],
+        });
+        if (p3) {
+            toast("第三面" + p3);
+            sleep(2000)
+            //1号位从者
+            click(385, 865)//3技能
+            sleep(2500)
+
+            //2号位从者
+            click(585, 865)//1技能
+            sleep(500)
+            click(500, 700)//buff给1号
+            sleep(3000)
+
+            //3号位从者
+            click(1065, 865)//1技能
+            sleep(2500)
+            click(1345, 865)//3技能
+            sleep(500)
+            click(500, 700)//buff给1号
+            sleep(3000)
+            click(429, 66)//更改目标
+            sleep(200)
+            click(1800, 460)//换人礼装
+            sleep(500)
+            click(1500, 460)//2技能
+            sleep(2500)
+
+            sleep(1000)
+            click(1700, 900)//选卡
+            sleep(2000)
+            click(600, 300)//宝具1
+            sleep(800)
+            click(1750, 750)//卡5
+            sleep(800)
+            click(200, 750)//卡1
+            break
+        }
+    }
+
+
+    for (t = 1; t > 0; t++) {
+        var t3 = findImage(captureScreen(), turn3, {
+            region: [1295, 20, 34, 34],
+        });
+        var point_result = findImage(captureScreen(), result, {
+            region: [96, 232],
+        });
+        var point_attack = findImage(captureScreen(), attack, {
+            region: [1590, 800],
+        });
+        if (t3 && point_attack) {
+            toast("3面平A补刀");
+            sleep(2000)
+
+            sleep(1000)
+            click(1700, 900)//选卡
+            sleep(2000)
+            click(200, 750)//卡1
+            sleep(800)
+            click(600, 750)//卡2
+            sleep(800)
+            click(1000, 750)//卡3
+            sleep(800)
+            continue;
+        }
+        else if (point_result) {
+            toast("结算" + point_result);
+            sleep(2000)
+            click(1000, 600)
+            sleep(2000)
+            click(1000, 600)
+            sleep(1000)
+            click(1650, 1010)
+            break
+        }
+    }
+
+   
+
+    while (true) {
+        var img_finish = captureScreen();
+        var color_finish = images.pixel(img_finish, 98, 980);
+        var point_finish = findColor(img_finish, "#4f4f4f", {
+            region: [98, 980, 1, 1],
+            threshold: 99
+        });
+        //判断在该坐标的颜色是否为白色
+        if (images.detectsColor(img_finish, "#ffffff", 960, 545)) {
+            sleep(3000)
+            click(960, 545)
+            toast("获得绿方块");
+        }
+        if (!point_finish) {
+            toast("战斗结束！" + colors.toString(color_finish));
+            break
+        }
+    }
+}
